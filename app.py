@@ -252,8 +252,8 @@ def extract_ICC_rehab():
 
 # Function to format numbers with commas
 def format_number_with_commas(number):
-    return locale.format_string("%d", number, grouping=True)
-
+    return "{:,}".format(number)
+    
 def edit_docx(as_on_date, promoter_name, ECC_95):
     # Check if ECC_rehab and ICC_rehab are not null or zero
     if ECC_rehab != "" and ICC_rehab != "" and float(ECC_rehab) != 0 and float(ICC_rehab) != 0:
