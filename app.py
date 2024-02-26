@@ -206,7 +206,7 @@ def process_text(text):
     st.write(f"Incurred Construction Cost: {ICC}")
 
     # Edit the Word document and offer download
-    edited_docx_bytes = edit_docx(as_on_date, promoter_name, ECC_95, registration_date)
+    edited_docx_bytes = edit_docx(as_on_date, promoter_name, ECC_95)
     st.download_button(label="Download Edited Document", data=edited_docx_bytes, file_name="Machine_generated_form_2.docx",
                        mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
 
