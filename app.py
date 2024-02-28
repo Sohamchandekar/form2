@@ -254,8 +254,10 @@ def extract_ICC_rehab():
 def format_number_with_commas(number):
     # Convert number to string
     number_str = str(int(number))  # Convert to int to remove decimal point if present
+
     # Determine the length of the number string
     length = len(number_str)
+
     # Apply formatting based on the number of digits
     if length == 9:
         formatted_number = number_str[:-7] + "," + number_str[-7:-5] + "," + number_str[-5:-3] + "," + number_str[-3:]
@@ -275,8 +277,10 @@ def format_number_with_commas(number):
         formatted_number = number_str
     else:
         formatted_number = "Invalid number"
+
     return formatted_number
-    
+
+
 def edit_docx(as_on_date, promoter_name, ECC_95):
     # Check if ECC_rehab and ICC_rehab are not null or zero
     if ECC_rehab != "" and ICC_rehab != "" and float(ECC_rehab) != 0 and float(ICC_rehab) != 0:
@@ -475,8 +479,8 @@ def edit_docx(as_on_date, promoter_name, ECC_95):
                 cell.text = cell.text.replace("reg_date", registration_date.strftime("%d/%m/%Y"))
                 run.font.name = font_name
                 run.font.size = font_size
-            if "modulus_diffrence" in run.text:
-                run.text = run.text.replace("modulus_diffrence", format_number_with_commas(Diffrence_mod))
+            if "modulus_difference" in run.text:
+                run.text = run.text.replace("modulus_difference", format_number_with_commas(Diffrence_mod))
                 run.font.name = font_name
                 run.font.size = font_size
 
