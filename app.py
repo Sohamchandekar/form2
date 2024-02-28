@@ -252,7 +252,30 @@ def extract_ICC_rehab():
 
 # Function to format numbers with commas
 def format_number_with_commas(number):
-    return "{:,}".format(number)
+    # Convert number to string
+    number_str = str(int(number))  # Convert to int to remove decimal point if present
+    # Determine the length of the number string
+    length = len(number_str)
+    # Apply formatting based on the number of digits
+    if length == 9:
+        formatted_number = number_str[:-7] + "," + number_str[-7:-5] + "," + number_str[-5:-3] + "," + number_str[-3:]
+    elif length == 8:
+        formatted_number = number_str[:-7] + "," + number_str[-7:-5] + "," + number_str[-5:-3] + "," + number_str[-3:]
+    elif length == 7:
+        formatted_number = number_str[:-5] + "," + number_str[-5:-3] + "," + number_str[-3:]
+    elif length == 6:
+        formatted_number = number_str[:-5] + "," + number_str[-5:-3] + "," + number_str[-3:]
+    elif length == 5:
+        formatted_number = number_str[:-3] + "," + number_str[-3:]
+    elif length == 4:
+        formatted_number = number_str[:-3] + "," + number_str[-3:]
+    elif length == 3:
+        formatted_number = number_str
+    elif length == 2:
+        formatted_number = number_str
+    else:
+        formatted_number = "Invalid number"
+    return formatted_number
     
 def edit_docx(as_on_date, promoter_name, ECC_95):
     # Check if ECC_rehab and ICC_rehab are not null or zero
