@@ -13,7 +13,7 @@ import re
 locale.setlocale(locale.LC_ALL, '')
 
 global formatted_text, as_on_date,promoter_name,project_name,registration_number,ECC,ICC,ECC_rehab,ICC_rehab,registration_date,\
-    planning_authority,promoter_address,Diffrence_mod
+    planning_authority,promoter_address,Diffrence_mod,today_date
 
 formatted_text = ""  # Global variable to store the formatted text
 
@@ -91,7 +91,7 @@ def main():
 
 
 def create_form_2():
-    global formatted_text , promoter_address, registration_date, planning_authority
+    global formatted_text , promoter_address, registration_date, planning_authority, today_date
     # File uploader widget
     uploaded_file = st.file_uploader("Dump your Form 3 here ", type=["xlsx", "xls", "xlsb"], help="Upload the new format form 3 excel.")
 
@@ -103,6 +103,10 @@ def create_form_2():
 
     # Input field for planning authority
     planning_authority = st.text_input("Planning Authority", "")
+
+    # Get today's date in dd/mm/yy format
+    today_date = datetime.now().strftime("%d/%m/%y")
+
 
     # Process button
     if uploaded_file is not None:
@@ -205,6 +209,8 @@ def process_text(text):
     st.write(f"Estimated Construction Cost: {ECC}")
     st.write(f"Incurred Construction Cost: {ICC}")
 
+    st.write(formatted_text)
+
     # Edit the Word document and offer download
     edited_docx_bytes = edit_docx(as_on_date, promoter_name, ECC_95)
     st.download_button(label="Download Edited Document", data=edited_docx_bytes, file_name="Machine_generated_form_2.docx",
@@ -243,12 +249,12 @@ def extract_ICC():
 def extract_ECC_rehab():
     global formatted_text  # Access the global variable
     ECC_rehab = formatted_text.split("|Estimated|Construction|Cost|of|Rehab|Building|including|Site|Development|and|Infrastructure|for|the|same|as|certified|by|the|Engineer.|")[1].split("(ii)|")[0].strip()
-    return ECC_rehab
+    return ECC_rehab if ECC_rehab != "NaN" else "0"
 
 def extract_ICC_rehab():
     global formatted_text  # Access the global variable
     ICC_rehab = formatted_text.split("|Incurred|Expenditure|for|construction|Rehab|building|as|per|the|books|of|accounts|as|verified|by|the|CA.|")[1].split("(ii)|")[0].strip()
-    return ICC_rehab
+    return ICC_rehab if ICC_rehab != "NaN" else "0"
 
 # Function to format numbers with commas
 def format_number_with_commas(number):
@@ -276,11 +282,9 @@ def format_number_with_commas(number):
     elif length == 2:
         formatted_number = number_str
     else:
-        formatted_number = "Invalid number"
+        formatted_number = number_str
 
     return formatted_number
-
-
 def edit_docx(as_on_date, promoter_name, ECC_95):
     # Check if ECC_rehab and ICC_rehab are not null or zero
     if ECC_rehab != "" and ICC_rehab != "" and float(ECC_rehab) != 0 and float(ICC_rehab) != 0:
@@ -291,7 +295,6 @@ def edit_docx(as_on_date, promoter_name, ECC_95):
         template_path = "form_2_exceptional.docx"
     else:
         template_path = "form_2_normal.docx"
-
 
     # Load the Word template based on the determined path
     doc = Document(template_path)
@@ -375,8 +378,7 @@ def edit_docx(as_on_date, promoter_name, ECC_95):
                             run.font.name = font_name  # Set font name
                             run.font.size = font_size
                             if "as date" in run.text:
-                                run.bold = True  # Make text bold
-
+                                run.bold = True
                 if "reg_date" in cell.text:
                     cell.text = cell.text.replace("reg_date", registration_date)
                     for paragraph in cell.paragraphs:
@@ -385,7 +387,6 @@ def edit_docx(as_on_date, promoter_name, ECC_95):
                             run.font.size = font_size
                             if "as date" in run.text:
                                 run.bold = True
-
                 if "ECC_rehab_95" in cell.text:
                     cell.text = cell.text.replace("ECC_rehab_95", format_number_with_commas(ECC_rehab_95))
                     cell.paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER  # Justify to center
@@ -435,6 +436,7 @@ def edit_docx(as_on_date, promoter_name, ECC_95):
                             run.font.name = font_name  # Set font name
                             run.font.size = font_size
 
+
             # Replace placeholders in text paragraphs with variable values and set font settings
     for paragraph in doc.paragraphs:
         for run in paragraph.runs:
@@ -466,7 +468,6 @@ def edit_docx(as_on_date, promoter_name, ECC_95):
                 run.text = run.text.replace("Diffrence", format_number_with_commas(Diffrence))
                 run.font.name = font_name
                 run.font.size = font_size
-
             if "planning_authority_name" in run.text:
                 run.text = run.text.replace("planning_authority_name", planning_authority)
                 run.font.name = font_name
@@ -484,6 +485,13 @@ def edit_docx(as_on_date, promoter_name, ECC_95):
                 run.font.name = font_name
                 run.font.size = font_size
 
+
+    for paragraph in doc.paragraphs:
+        for run in paragraph.runs:
+            if "today_date" in run.text:
+                run.text = run.text.replace("today_date", today_date)
+                run.font.name = font_name
+                run.font.size = font_size
 
     # Save the edited document to a BytesIO object
     edited_docx_bytes = BytesIO()
