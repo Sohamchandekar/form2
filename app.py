@@ -262,7 +262,9 @@ def format_number_with_commas(number):
     length = len(number_str)
 
     # Apply formatting based on the number of digits
-    if length == 9:
+    if length == 10:
+        formatted_number = number_str[:-9] + "," + number_str[-9:-7] + "," + number_str[-7:-5] + "," + number_str[-5:-3] + "," + number_str[-3:]     
+    elif length == 9:
         formatted_number = number_str[:-7] + "," + number_str[-7:-5] + "," + number_str[-5:-3] + "," + number_str[-3:]
     elif length == 8:
         formatted_number = number_str[:-7] + "," + number_str[-7:-5] + "," + number_str[-5:-3] + "," + number_str[-3:]
