@@ -191,7 +191,7 @@ def process_text(text):
     ECC_FOR_REHAB = ECC_rounded + ECC_rehab_rounded
     ICC_FOR_REHAB = ICC_rounded + ICC_rehab_rounded
     NEW_ECC_REHAB_5 = (ECC_FOR_REHAB * 0.05)
-    NEW_ICC_REHAB_5 = ICC_FOR_REHAB * 0.05)
+    NEW_ICC_REHAB_5 = (ICC_FOR_REHAB * 0.05)
     Diffrence_FOR_REHAB = ECC_FOR_REHAB - ICC_FOR_REHAB
 
     # Workdone percentage and difference calculation
