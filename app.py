@@ -12,7 +12,7 @@ import re
 locale.setlocale(locale.LC_ALL, '')
 
 global formatted_text, as_on_date, promoter_name, project_name, registration_number, ECC, ICC, ECC_rehab, ICC_rehab, registration_date, \
-    planning_authority, promoter_address, Diffrence_mod, today_date,ECC_FOR_REHAB,ICC_FOR_REHAB, Diffrence_FOR_REHAB,construction_cost,NEW_ECC_REHAB_5,NEW_ICC_REHAB_5,NEW_DIFFRENCE_5
+    planning_authority, promoter_address, Diffrence_mod, today_date, ECC_FOR_REHAB, ICC_FOR_REHAB, Diffrence_FOR_REHAB, construction_cost, NEW_ECC_REHAB_5, NEW_ICC_REHAB_5, NEW_DIFFRENCE_5, NEW_PERCENTAGE_REHAB
 formatted_text = ""  # Global variable to store the formatted text
 
 
@@ -159,9 +159,7 @@ def process_text(text):
     # Extract and process text variables
     global as_on_date, promoter_name, project_name, registration_number, ECC_rounded, ICC_rounded, ECC_rehab, ICC_rehab, ECC_95, ECC_5, \
         ICC_95, ICC_5, Per_1, Per_2, Difference_95, Difference_5, Diffrence_95_mod, Diffrence_5_mod, Diffrence, ECC_rehab_95, ECC_rehab_5, \
-        ICC_rehab_95, ICC_rehab_5, Diffrence_rehab, Per_3, registration_date, ICC_FOR_REHAB,ECC_FOR_REHAB,Diffrence_FOR_REHAB,Diffrence_mod,construction_cost,NEW_ICC_REHAB_5,NEW_ECC_REHAB_5,NEW_DIFFRENCE_5
-    
-
+        ICC_rehab_95, ICC_rehab_5, Diffrence_rehab, Per_3, registration_date, ICC_FOR_REHAB, ECC_FOR_REHAB, Diffrence_FOR_REHAB, Diffrence_mod, construction_cost, NEW_ICC_REHAB_5, NEW_ECC_REHAB_5, NEW_DIFFRENCE_5, NEW_PERCENTAGE_REHAB
 
     ##CONSTANT VARIABLE
     as_on_date = extract_as_on_date().replace("|", " ")
@@ -210,6 +208,7 @@ def process_text(text):
     Diffrence_mod = abs(ECC_rounded - ICC_rounded)
     construction_cost = Diffrence_95_mod - Diffrence_5_mod
     NEW_DIFFRENCE_5 = NEW_ECC_REHAB_5 - NEW_ICC_REHAB_5
+    NEW_PERCENTAGE_REHAB = float(round((NEW_ICC_REHAB_5 / NEW_ECC_REHAB_5) * 100,2))
 
     # Display extracted values
     st.subheader("Values Extracted From The Given Excel!:")
@@ -229,22 +228,26 @@ def process_text(text):
                        file_name="Machine_generated_form_2.docx",
                        mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
 
+
 def extract_as_on_date():
     global formatted_text  # Access the global variable
     as_on_date = formatted_text.split("As|on|")[1].split("NaN|NaN")[0].strip()
     return as_on_date
+
 
 def extract_promoter_name():
     global formatted_text  # Access the global variable
     promoter_name = formatted_text.split("|being|developed|by|")[1].split("|NaN|NaN")[0].strip()
     return promoter_name
 
+
 def extract_project_name():
     global formatted_text  # Access the global variable
     project_name = \
-    formatted_text.split("This|certificate|is|being|issued|for|the|")[1].split("|having|MahaRERA|Registration|")[
-        0].strip()
+        formatted_text.split("This|certificate|is|being|issued|for|the|")[1].split("|having|MahaRERA|Registration|")[
+            0].strip()
     return project_name
+
 
 def extract_registration_number():
     global formatted_text  # Access the global variable
@@ -252,10 +255,12 @@ def extract_registration_number():
         0].strip()
     return registration_number
 
+
 def extract_ECC():
     global formatted_text  # Access the global variable
     ECC = formatted_text.split("a|Estimated|Cost|of|Construction|as|certified|by|Engineer.|")[1].split("b.|")[0].strip()
     return ECC
+
 
 def extract_ICC():
     global formatted_text  # Access the global variable
@@ -263,6 +268,7 @@ def extract_ICC():
         "(b)|Actual|Cost|of|construction|incurred|as|per|the|books|of|accounts|as|verified|by|the|CA.|")[1].split(
         "(ii)|")[0].strip()
     return ICC
+
 
 def extract_ECC_rehab():
     global formatted_text  # Access the global variable
@@ -279,9 +285,12 @@ def extract_ICC_rehab():
         1].split("(ii)|")[0].strip()
     return ICC_rehab if ICC_rehab != "NaN" else "0"
 
+
 def format_for_float(number):
     number_float = str(number)
     return number_float
+
+
 # Function to format numbers with commas
 def format_number_with_commas(number):
     # Convert number to string
@@ -292,9 +301,13 @@ def format_number_with_commas(number):
 
     # Apply formatting based on the number of digits
     if length == 11:
-        formatted_number = number_str[:-9] + "," + number_str[-9:-7] + "," + number_str[-7:-5] + "," + number_str[-5:-3] + "," + number_str[-3:]
+        formatted_number = number_str[:-9] + "," + number_str[-9:-7] + "," + number_str[-7:-5] + "," + number_str[
+                                                                                                       -5:-3] + "," + number_str[
+                                                                                                                      -3:]
     elif length == 10:
-        formatted_number = number_str[:-9] + "," + number_str[-9:-7] + "," + number_str[-7:-5] + "," + number_str[-5:-3] + "," + number_str[-3:]
+        formatted_number = number_str[:-9] + "," + number_str[-9:-7] + "," + number_str[-7:-5] + "," + number_str[
+                                                                                                       -5:-3] + "," + number_str[
+                                                                                                                      -3:]
     elif length == 9:
         formatted_number = number_str[:-7] + "," + number_str[-7:-5] + "," + number_str[-5:-3] + "," + number_str[-3:]
     elif length == 8:
@@ -319,7 +332,8 @@ def format_number_with_commas(number):
 
 def edit_docx(as_on_date, promoter_name, ECC_95):
     # Check if ECC_rehab and ICC_rehab are not null or zero
-    if (ECC_rehab != "" and ICC_rehab != "") or (ECC_rehab != "" and ICC_rehab == "") or (ECC_rehab == "" and ICC_rehab != ""):
+    if (ECC_rehab != "" and ICC_rehab != "") or (ECC_rehab != "" and ICC_rehab == "") or (
+            ECC_rehab == "" and ICC_rehab != ""):
         # Use the template for cases where ECC_rehab and ICC_rehab are not null or zero
         template_path = "form_2_rehab.docx"
     elif Diffrence < 0:
@@ -381,6 +395,14 @@ def edit_docx(as_on_date, promoter_name, ECC_95):
                             run.font.size = font_size
                 if "Per_2" in cell.text:
                     cell.text = cell.text.replace("Per_2", format_for_float(Per_2))
+                    cell.paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER  # Justify to center
+                    for paragraph in cell.paragraphs:
+                        for run in paragraph.runs:
+                            run.bold = True  # Make text bold
+                            run.font.name = font_name  # Set font name
+                            run.font.size = font_size
+                if "per_new" in cell.text:
+                    cell.text = cell.text.replace("per_new", format_for_float(NEW_PERCENTAGE_REHAB))
                     cell.paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER  # Justify to center
                     for paragraph in cell.paragraphs:
                         for run in paragraph.runs:
@@ -451,22 +473,30 @@ def edit_docx(as_on_date, promoter_name, ECC_95):
                             run.bold = True
                             run.font.name = font_name  # Set font name
                             run.font.size = font_size
-                if "new_ECC_5" in cell.text:
-                    cell.text = cell.text.replace("new_ECC_5", format_number_with_commas(NEW_ECC_REHAB_5))
+                if "new_diff" in cell.text:
+                    cell.text = cell.text.replace("new_diff", format_number_with_commas(NEW_DIFFRENCE_5))
                     cell.paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER  # Justify to center
                     for paragraph in cell.paragraphs:
                         for run in paragraph.runs:
                             run.bold = True
                             run.font.name = font_name  # Set font name
                             run.font.size = font_size
-                if "NEW_ICC_5" in cell.text:
-                    cell.text = cell.text.replace("NEW_ICC_5", format_number_with_commas(NEW_ICC_REHAB_5))
+                if "new_ecc" in cell.text:
+                    cell.text = cell.text.replace("new_ecc", format_number_with_commas(NEW_ECC_REHAB_5))
                     cell.paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER  # Justify to center
                     for paragraph in cell.paragraphs:
                         for run in paragraph.runs:
                             run.bold = True
                             run.font.name = font_name  # Set font name
-                            run.font.size = font_size  
+                            run.font.size = font_size
+                if "new_icc" in cell.text:
+                    cell.text = cell.text.replace("new_icc", format_number_with_commas(NEW_ICC_REHAB_5))
+                    cell.paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER  # Justify to center
+                    for paragraph in cell.paragraphs:
+                        for run in paragraph.runs:
+                            run.bold = True
+                            run.font.name = font_name  # Set font name
+                            run.font.size = font_size
                 if "diff_95_mod" in cell.text:
                     cell.text = cell.text.replace("diff_95_mod", format_number_with_commas(Diffrence_95_mod))
                     cell.paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER  # Justify to center
@@ -562,12 +592,12 @@ def edit_docx(as_on_date, promoter_name, ECC_95):
                 run.font.name = font_name
                 run.font.size = font_size
 
-
     # Save the edited document to a BytesIO object
     edited_docx_bytes = BytesIO()
     doc.save(edited_docx_bytes)
     edited_docx_bytes.seek(0)  # Reset the file pointer to the beginning
     return edited_docx_bytes
+
 
 if __name__ == "__main__":
     main()
