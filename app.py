@@ -451,8 +451,8 @@ def edit_docx(as_on_date, promoter_name, ECC_95):
                             run.bold = True
                             run.font.name = font_name  # Set font name
                             run.font.size = font_size
-                if "NEW_ECC_5" in cell.text:
-                    cell.text = cell.text.replace("NEW_ECC_5", format_number_with_commas(NEW_ECC_REHAB_5))
+                if "new_ECC_5" in cell.text:
+                    cell.text = cell.text.replace("new_ECC_5", format_number_with_commas(NEW_ECC_REHAB_5))
                     cell.paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER  # Justify to center
                     for paragraph in cell.paragraphs:
                         for run in paragraph.runs:
