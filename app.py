@@ -451,14 +451,6 @@ def edit_docx(as_on_date, promoter_name, ECC_95):
                             run.bold = True
                             run.font.name = font_name  # Set font name
                             run.font.size = font_size
-                if "NEW_ICC_5" in cell.text:
-                    cell.text = cell.text.replace("NEW_ICC_5", format_number_with_commas(NEW_ICC_REHAB_5))
-                    cell.paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER  # Justify to center
-                    for paragraph in cell.paragraphs:
-                        for run in paragraph.runs:
-                            run.bold = True
-                            run.font.name = font_name  # Set font name
-                            run.font.size = font_size
                 if "NEW_ECC_5" in cell.text:
                     cell.text = cell.text.replace("NEW_ECC_5", format_number_with_commas(NEW_ECC_REHAB_5))
                     cell.paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER  # Justify to center
@@ -467,6 +459,14 @@ def edit_docx(as_on_date, promoter_name, ECC_95):
                             run.bold = True
                             run.font.name = font_name  # Set font name
                             run.font.size = font_size
+                if "NEW_ICC_5" in cell.text:
+                    cell.text = cell.text.replace("NEW_ICC_5", format_number_with_commas(NEW_ICC_REHAB_5))
+                    cell.paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER  # Justify to center
+                    for paragraph in cell.paragraphs:
+                        for run in paragraph.runs:
+                            run.bold = True
+                            run.font.name = font_name  # Set font name
+                            run.font.size = font_size  
                 if "diff_95_mod" in cell.text:
                     cell.text = cell.text.replace("diff_95_mod", format_number_with_commas(Diffrence_95_mod))
                     cell.paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER  # Justify to center
