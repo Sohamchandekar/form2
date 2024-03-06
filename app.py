@@ -12,7 +12,7 @@ import re
 locale.setlocale(locale.LC_ALL, '')
 
 global formatted_text, as_on_date, promoter_name, project_name, registration_number, ECC, ICC, ECC_rehab, ICC_rehab, registration_date, \
-    planning_authority, promoter_address, Diffrence_mod, today_date,ECC_FOR_REHAB,ICC_FOR_REHAB, Diffrence_FOR_REHAB,construction_cost
+    planning_authority, promoter_address, Diffrence_mod, today_date,ECC_FOR_REHAB,ICC_FOR_REHAB, Diffrence_FOR_REHAB,construction_cost,NEW_ECC_REHAB_5,NEW_ICC_REHAB_5,NEW_DIFFRENCE_5
 formatted_text = ""  # Global variable to store the formatted text
 
 
@@ -159,7 +159,8 @@ def process_text(text):
     # Extract and process text variables
     global as_on_date, promoter_name, project_name, registration_number, ECC_rounded, ICC_rounded, ECC_rehab, ICC_rehab, ECC_95, ECC_5, \
         ICC_95, ICC_5, Per_1, Per_2, Difference_95, Difference_5, Diffrence_95_mod, Diffrence_5_mod, Diffrence, ECC_rehab_95, ECC_rehab_5, \
-        ICC_rehab_95, ICC_rehab_5, Diffrence_rehab, Per_3, registration_date, ICC_FOR_REHAB,ECC_FOR_REHAB,Diffrence_FOR_REHAB,Diffrence_mod,construction_cost
+        ICC_rehab_95, ICC_rehab_5, Diffrence_rehab, Per_3, registration_date, ICC_FOR_REHAB,ECC_FOR_REHAB,Diffrence_FOR_REHAB,Diffrence_mod,construction_cost,NEW_ICC_REHAB_5,NEW_ECC_REHAB_5,NEW_DIFFRENCE_5
+    
 
 
     ##CONSTANT VARIABLE
@@ -189,6 +190,8 @@ def process_text(text):
     ## VARIABLE FOR REHAB CASE
     ECC_FOR_REHAB = ECC_rounded + ECC_rehab_rounded
     ICC_FOR_REHAB = ICC_rounded + ICC_rehab_rounded
+    NEW_ECC_REHAB_5 = (ECC_FOR_REHAB * 0.05)
+    NEW_ICC_REHAB_5 = ICC_FOR_REHAB * 0.05)
     Diffrence_FOR_REHAB = ECC_FOR_REHAB - ICC_FOR_REHAB
 
     # Workdone percentage and difference calculation
@@ -206,6 +209,7 @@ def process_text(text):
     Diffrence_rehab = (ECC_rehab_95 - ICC_rehab_95)
     Diffrence_mod = abs(ECC_rounded - ICC_rounded)
     construction_cost = Diffrence_95_mod - Diffrence_5_mod
+    NEW_DIFFRENCE_5 = NEW_ECC_REHAB_5 - NEW_ICC_REHAB_5
 
     # Display extracted values
     st.subheader("Values Extracted From The Given Excel!:")
@@ -441,6 +445,22 @@ def edit_docx(as_on_date, promoter_name, ECC_95):
                             run.font.size = font_size
                 if "Diffrence_rehab" in cell.text:
                     cell.text = cell.text.replace("Diffrence_rehab", format_number_with_commas(Diffrence_rehab))
+                    cell.paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER  # Justify to center
+                    for paragraph in cell.paragraphs:
+                        for run in paragraph.runs:
+                            run.bold = True
+                            run.font.name = font_name  # Set font name
+                            run.font.size = font_size
+                if "NEW_ICC_5" in cell.text:
+                    cell.text = cell.text.replace("NEW_ICC_5", format_number_with_commas(NEW_ICC_REHAB_5))
+                    cell.paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER  # Justify to center
+                    for paragraph in cell.paragraphs:
+                        for run in paragraph.runs:
+                            run.bold = True
+                            run.font.name = font_name  # Set font name
+                            run.font.size = font_size
+                if "NEW_ECC_5" in cell.text:
+                    cell.text = cell.text.replace("NEW_ECC_5", format_number_with_commas(NEW_ECC_REHAB_5))
                     cell.paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.CENTER  # Justify to center
                     for paragraph in cell.paragraphs:
                         for run in paragraph.runs:
