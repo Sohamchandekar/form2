@@ -332,7 +332,7 @@ def format_number_with_commas(number):
 
 def edit_docx(as_on_date, promoter_name, ECC_95):
     # Check if ECC_rehab and ICC_rehab satisfy the conditions for using the rehab format
-    if (ECC_rehab != "" and ECC_rehab != 0 and ICC_rehab != "" and ICC_rehab != 0) or (ECC_rehab != "" and ECC_rehab != 0):
+    if (ECC_rehab != "" or ECC_rehab != 0 and ICC_rehab != "" or ICC_rehab != 0) or (ECC_rehab != "" and ECC_rehab != 0):
         # Use the template for cases where ECC_rehab and ICC_rehab meet the rehab conditions
         template_path = "form_2_rehab.docx"
     elif Diffrence < 0:
