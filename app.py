@@ -73,9 +73,9 @@ def main():
         unsafe_allow_html=True
     )
 
-    quote = """
-    <div style='font-style: italic; color: gray; border-left: 3px black; padding-left: 10px; margin-bottom: 10px;'>
-        "Lamba Saans le aur dimag mein oxygen bhar, <br> kyunki dimag mein rahegi shanti tabhi aayegi Kranti" <br> -Jackie Shroff
+   quote = """
+    <div style='font-style: italic; color: black; border-left: 3.5px solid gray; padding-left: 10px; margin-bottom: 10px;'>
+        " 💡Lamba Saans le aur dimag mein oxygen bhar, <br> kyunki dimag mein rahegi shanti tabhi aayegi Kranti" <br> -Jackie Shroff 🌳
     </div>
     """
     
