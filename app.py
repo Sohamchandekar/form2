@@ -74,10 +74,10 @@ def main():
     )
 
    quote = """
-    <div style='font-style: italic; color: black; border-left: 3.5px solid gray; padding-left: 10px; margin-bottom: 10px;'>
-        " 💡Lamba Saans le aur dimag mein oxygen bhar, <br> kyunki dimag mein rahegi shanti tabhi aayegi Kranti" <br> -Jackie Shroff 🌳
-    </div>
-    """
+        <div style='font-style: italic; color: black; border-left: 3.5px solid gray; padding-left: 10px; margin-bottom: 10px;'>
+            "💡Lamba Saans le aur dimag mein oxygen bhar, <br> kyunki dimag mein rahegi shanti tabhi aayegi Kranti" <br> -Jackie Shroff 🌳
+        </div>
+        """
     
     st.markdown(quote, unsafe_allow_html=True)
     st.title("Lets Generate Form 2 !! ✌️")
