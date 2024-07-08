@@ -19,7 +19,7 @@ formatted_text = ""  # Global variable to store the formatted text
 
 def main():
     # Set page configuration
-    st.set_page_config(page_title='Generate Form 2', page_icon='📝', layout='wide')
+    st.set_page_config(page_title='Generate Form 2', page_icon='💻', layout='wide')
 
     # Apply custom CSS for aesthetic changes
     st.markdown(
@@ -73,6 +73,7 @@ def main():
         unsafe_allow_html=True
     )
 
+    st.write("Lamba Saans le aur dimag mein oxygen bhar, kyunki dimag mein rahegi shanti tabhi aayegi Kranti -Jackie Shroff")
     st.title("Lets Generate Form 2 !! ✌️")
 
     # Sidebar
