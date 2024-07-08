@@ -111,6 +111,8 @@ def create_form_2():
         "Thane Municipal Corporation",
         "Kalyan-Dombivli Municipal Corporation",
         "Collector of Raigad",
+        "Navi Mumbai Municipal Corporation",
+        
         ###################################### 
         "Pune Municipal Corporation",
         "Pimpri Chinchwad Municipal Corporation",
@@ -237,8 +239,7 @@ def process_text(text):
     st.write("_______________________________________________________")
     st.write(f"Estimated Cost of Construction Rehab : {ECC_rehab_rounded}")
     st.write(f"Incurred Cost of Construction Rehab : {ICC_rehab_rounded}")
-    st.write("________________________________________________________")
-    st.write(f"{formatted_text}")
+   
 
 
     # Edit the Word document and offer download
