@@ -245,7 +245,7 @@ def process_text(text):
     # Edit the Word document and offer download
     edited_docx_bytes = edit_docx(as_on_date, promoter_name, ECC_95)
     st.download_button(label="Download Edited Document", data=edited_docx_bytes,
-                       file_name="Machine_generated_form_2.docx",
+                       file_name=f"form_2-{project_name}.docx",
                        mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
 
 
