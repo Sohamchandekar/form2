@@ -247,12 +247,17 @@ def process_text(text):
     st.write(f"Estimated Cost of Construction Rehab : {ECC_rehab_rounded}")
     st.write(f"Incurred Cost of Construction Rehab : {ICC_rehab_rounded}")
    
+def sanitize_filename(filename):
+    return re.sub(r'[\n\r]+', '', filename).replace(' ', '_')
 
+    # Construct and sanitize the filename
+    raw_filename = f"Form 2- {project_name}- as on {as_on_date}.docx"
+    safe_filename = sanitize_filename(raw_filename)
 
     # Edit the Word document and offer download
     edited_docx_bytes = edit_docx(as_on_date, promoter_name, ECC_95)
     st.download_button(label="Download Edited Document", data=edited_docx_bytes,
-                       file_name=f"Form 2- {project_name}- as on {as_on_date}.docx",
+                       file_name= safe_filename,
                        mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document")
 
 
