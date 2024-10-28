@@ -247,8 +247,8 @@ def process_text(text):
     st.write(f"Estimated Cost of Construction Rehab : {ECC_rehab_rounded}")
     st.write(f"Incurred Cost of Construction Rehab : {ICC_rehab_rounded}")
    
-def sanitize_filename(filename):
-    return re.sub(r'[\n\r]+', '', filename).replace(' ', '_')
+    def sanitize_filename(filename):
+        return re.sub(r'[\n\r]+', '', filename).replace(' ', '_')
 
     # Construct and sanitize the filename
     raw_filename = f"Form 2- {project_name}- as on {as_on_date}.docx"
